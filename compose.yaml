@@ -1,0 +1,26 @@
+services:
+  app:
+    image: node:18-alpine
+    command: sh -c "npm install && npm run start:dev"
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - 4000:4000
+    container_name: maum_code_test
+    depends_on:
+      - local_postgres
+
+  local_postgres:
+    image: postgres
+    hostname: local_postgres
+    container_name: local_postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      TZ: Asia/Seoul
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres_db:/var/lib/postgresql/data
