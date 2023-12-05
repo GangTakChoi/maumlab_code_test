@@ -18,6 +18,7 @@ services:
     container_name: local_postgres
     restart: always
     environment:
+      POSTGRES_DB: maumlab
       POSTGRES_PASSWORD: postgres
       TZ: Asia/Seoul
     ports:

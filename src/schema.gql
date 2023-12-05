@@ -1,0 +1,135 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AnswerSheet {
+  """답변지 아이디"""
+  id: Int!
+  servey: Servey!
+  answers: [Answer!]
+
+  """답변지 합산 점수"""
+  score: Int!
+}
+
+type Answer {
+  """답변 아이디"""
+  id: Int!
+  answerSheet: AnswerSheet!
+  option: Option!
+}
+
+type Option {
+  """선택지 아이디"""
+  id: Int!
+
+  """선택지 내용"""
+  content: String!
+
+  """선택지 점수"""
+  score: Int!
+  question: Question!
+  answers: [Answer!]
+}
+
+type Question {
+  """문항 아이디"""
+  id: Int!
+
+  """문항 내용"""
+  content: String!
+  servey: Servey!
+  options: [Option!]
+}
+
+type Servey {
+  """설문지 아이디"""
+  id: Int!
+
+  """설문지 이름"""
+  name: String!
+  questions: [Question!]
+  answerSheets: [AnswerSheet!]
+}
+
+type Query {
+  getAnswerSheetList: [AnswerSheet!]!
+  getAnswerSheet(id: Int!): AnswerSheet!
+  getServeyList: [Servey!]!
+  getServey(id: Int!): Servey!
+  getOptionList(questionId: Int!): [Option!]!
+  getOption(id: Int!): Option!
+  getQuestionList(serveyId: Int!): [Question!]!
+  getQuestion(id: Int!): Question!
+}
+
+type Mutation {
+  createAnswer(createAnswerInput: CreateAnswerInput!): AnswerSheet!
+  removeAnswer(id: Int!): JSON!
+  createServey(createServeyInput: CreateServeyInput!): Servey!
+  updateServey(id: Float!, updateServeyInput: UpdateServeyInput!): JSON!
+  removeServey(id: Int!): JSON!
+  createOption(questionId: Int!, createOptionInput: CreateOptionInput!): Option!
+  updateOption(id: Int!, updateOptionInput: UpdateOptionInput!): JSON!
+  removeOption(id: Int!): JSON!
+  createQuestion(serveyId: Int!, createQuestionInput: CreateQuestionInput!): Question!
+  updateQuestion(id: Int!, updateQuestionInput: UpdateQuestionInput!): JSON!
+  removeQuestion(id: Int!): JSON!
+}
+
+input CreateAnswerInput {
+  """설문지 아이디"""
+  serveyId: Int!
+
+  """답변 내용"""
+  answers: [AnswerInputBundle!]!
+}
+
+input AnswerInputBundle {
+  """문항 아이디"""
+  questionId: Int!
+
+  """선택지 아이디"""
+  optionId: Int!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+input CreateServeyInput {
+  """설문지 이름 입력"""
+  name: String!
+}
+
+input UpdateServeyInput {
+  """설문지 이름 입력"""
+  name: String
+}
+
+input CreateOptionInput {
+  """선택지 내용"""
+  content: String!
+
+  """선택지 점수"""
+  score: Int!
+}
+
+input UpdateOptionInput {
+  """선택지 내용"""
+  content: String
+
+  """선택지 점수"""
+  score: Int
+}
+
+input CreateQuestionInput {
+  """문항 내용"""
+  content: String!
+}
+
+input UpdateQuestionInput {
+  """문항 내용"""
+  content: String
+}
